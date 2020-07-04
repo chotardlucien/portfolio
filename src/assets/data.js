@@ -3,7 +3,7 @@
       tag:'branding',
       year:'2020',
       title:'Paralelle',
-      desc:'In this school project, we had to write and design a press magazine from scratch.<br> We chose to write our magazine about the paralelle between sciences and arts.',
+      desc:'In this school project, we had to write and design a press magazine from scratch. We chose to write our magazine about the paralelle between sciences and arts.',
       img:'0.jpg'
     },
     {

@@ -7,15 +7,8 @@ import styled from 'styled-components';
 import '../../main.css';
 
 const Wrapper = styled.div`
-  @media screen and (max-width: 960px){
-    padding:0 10%;
-  }
-  @media screen and (min-width: 960px){
-    width:915px;
-  }
-  @media screen and (min-width: 1260px){
-    width:1220px;
-  }
+  width:100%;
+  padding:0 4%;
   margin:0 auto;
 `
 

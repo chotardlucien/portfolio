@@ -24,6 +24,6 @@ body{
   height:100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background: linear-gradient(45deg, black, #404040);
+  background: linear-gradient(45deg, black, #1f1f1f);
   overflow: hidden;
 }
