@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "OpenSansBold";
+    src: url("assets/fonts/OpenSans-Bold.ttf"); }
+@font-face { 
+  font-family: "OpenSansBlack";
+  src: url("assets/fonts/OpenSans-ExtraBold.ttf"); }
+@font-face { 
+  font-family: "AvenirBook";
+  src: url("assets/fonts/AvenirLTProBook.otf"); }
+@font-face { 
+  font-family: "AvenirBlack";
+  src: url("assets/fonts/AvenirLTProBlack.otf"); }
+@font-face { 
+  font-family: "AvenirRoman";
+  src: url("assets/fonts/AvenirLTProRoman.otf"); }
+  
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+  display:block;
+  height:100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: linear-gradient(45deg, black, #404040);
+  overflow: hidden;
+}
