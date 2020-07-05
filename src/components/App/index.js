@@ -17,10 +17,10 @@ function App() {
     <BrowserRouter>
       <Wrapper>
         <Header></Header>
-        <Redirect exact from="/portfolio/" to="projects" />
+        <Redirect exact from="/" to="projects" />
         <Switch>
-        <Route path="/portfolio/about" component={About}></Route>
-        <Route path="/portfolio/projects" component={Projects}></Route>
+        <Route path="/about" component={About}></Route>
+        <Route path="/projects" component={Projects}></Route>
         </Switch>
       </Wrapper>
     </BrowserRouter>
