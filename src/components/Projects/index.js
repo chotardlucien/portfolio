@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import {StyledBtn} from '../shared_components.js'
 import {Spring} from 'react-spring/renderprops'
 import theme from '../../assets/theme.js'
+import delay from 'delay'
 
 const DesktopWrapper = styled.div`
 @media screen and (min-width: 960px){
@@ -32,6 +33,7 @@ align-items:baseline;
 }
 `
 const Info = styled.div`
+z-index:1;
 align-self:stretch;
 display:flex;
 flex-direction:column;
@@ -55,6 +57,13 @@ align-items:flex-end;
     span{
         text-transform:uppercase;
     }
+    
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+    transition: all 0.4s;
+    &.ismoving{
+        clip-path: polygon(0 1%, 0 0, 0 100%, 0% 100%);
+        transition: all 0.2s;
+    }
 }
 h2{
     color: ${theme.titleColor};
@@ -62,18 +71,32 @@ h2{
     font-family: AvenirBlack;
     letter-spacing: .2rem;
     text-align:right;
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+    transition: all 0.4s;
+    &.ismoving{
+        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+        transition: all 0.2s;
+    }
 }
 `
 const Desc = styled.p`
 padding: 30px 00px;
+height:115px;
 text-align: right;
 font-family: AvenirBook;
 font-size: 14px;
 position: relative;
 color: ${theme.textColor};
+clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+transition: all 0.4s;
+&.ismoving{
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    transition: all 0.2s;
+}
 `
 
 let SlidesContainer = styled.div`
+z-index:2;
 width: calc(100% * 3);
 transform: translateX(${props => 100/props.nbimg});
 position:relative;
@@ -95,7 +118,7 @@ let SlideImg = styled(Link)`
 width:${props => 100/props.nbimg}%;
 float:left;
 transition: all ${theme.sliderDelay}s;
-filter: blur(20px);
+filter: blur(10px);
 img{
     clip-path: polygon(70% 0, 100% 0%, 35% 100%, 0% 100%);
     filter: grayscale(100%);
@@ -114,9 +137,7 @@ img{
 @media screen and (min-width: 960px){
     width:400px;
     opacity:0.2;
-    transform:translateX(200px);
     &.active{
-        transform:translateX(0px) !important;
         opacity:1;
     }
 }
@@ -160,9 +181,8 @@ class Projects extends Component {
     constructor(props){
         super(props)
         this.sliderWrapper=React.createRef()
-        this.activeSlide=React.createRef()
-        this.disabledSlide=React.createRef()
         this.state={
+            isMoving:null,
             nbImg:data.length,
             curIndex:0,
             incrMobile:0,
@@ -191,26 +211,35 @@ class Projects extends Component {
         this.seekSlide(this.state.curIndex+1)
         }
     }
-    seekSlide = (target) => {
+    seekSlide = async (target) => {
         console.log('seekslide')
-        if(typeof(target)!="number" || target > data.length-1 || target < 0){
-            console.log(this.state.curIndex)
+        console.log(target)
+        // Handle incorrect target
+        if(target > data.length-1 || target < 0){
             target = this.state.curIndex
         }
-        let incr = (100/this.state.nbImg)*(target)
-        this.setState({
-            curIndex:target,
-            incrMobile:incr,
-            tag:data[target].tag,
-            year:data[target].year,
-            title:data[target].title,
-            desc:data[target].desc,
-        })
-        if(document.body.offsetWidth < 960){
-            this.sliderWrapper.current.style.transform="translateX(-"+incr+"%)"
-        }
-        else {
-            this.sliderWrapper.current.style.transform="translateY(calc(100%/"+this.state.nbImg+"*-"+target+"))"
+        else{
+            target = typeof(target)!="number" ? this.state.curIndex : target
+            let incr = (100/this.state.nbImg)*(target)
+            this.setState({
+                isMoving:"ismoving",
+                curIndex:target,
+                incrMobile:incr,})
+            if(document.body.offsetWidth < 960){
+                this.sliderWrapper.current.style.transform="translateX(-"+incr+"%)"
+            }
+            else {
+                this.sliderWrapper.current.style.transform="translateY(calc(100%/"+this.state.nbImg+"*-"+target+"))"
+            }
+            await delay(400)
+            console.log('ok')
+            this.setState({
+                tag:data[target].tag,
+                year:data[target].year,
+                title:data[target].title,
+                desc:data[target].desc,
+            })
+            this.setState({isMoving:"null"})
         }
     }
     render() {
@@ -229,8 +258,8 @@ class Projects extends Component {
                 <DesktopWrapper id="wrapper">
                     <Slide id="slide">
                         <SliderNav>
-                            <span>{this.state.curIndex+1}</span>
-                            <span>{data.length}</span>
+                            <span>0{this.state.curIndex+1}</span>
+                            <span>0{data.length}</span>
                         </SliderNav>
                         <SlidesContainer ref={this.sliderWrapper} nbimg={this.state.nbImg} curindex={this.state.curIndex}>
                         {data.map((item, index) => {
@@ -243,15 +272,14 @@ class Projects extends Component {
                         })}
                         </SlidesContainer>
                         <Info>
-                            
                             <Headline>
-                                <div id="context">
+                                <div id="context" className={this.state.isMoving}>
                                     <span id="tag">#{this.state.tag} - </span>
                                     <span id="year">{this.state.year}</span>
                                 </div>
-                                <h2>{this.state.title}</h2>
+                                <h2 className={this.state.isMoving}>{this.state.title}</h2>
                             </Headline>
-                            <Desc>{this.state.desc}</Desc>
+                            <Desc className={this.state.isMoving}>{this.state.desc}</Desc>
                             <StyledBtn to="/project_details">See project</StyledBtn>
                         </Info>
                     </Slide>
