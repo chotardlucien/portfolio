@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.95caff72.chunk.css",
-    "main.js": "/static/js/main.625c41bd.chunk.js",
-    "main.js.map": "/static/js/main.625c41bd.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.e5fc83a6.js",
-    "runtime-main.js.map": "/static/js/runtime-main.e5fc83a6.js.map",
-    "static/js/2.676aa28a.chunk.js": "/static/js/2.676aa28a.chunk.js",
-    "static/js/2.676aa28a.chunk.js.map": "/static/js/2.676aa28a.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.189a6c9db9abca552b8d0ec0efaf435d.js": "/precache-manifest.189a6c9db9abca552b8d0ec0efaf435d.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.95caff72.chunk.css.map": "/static/css/main.95caff72.chunk.css.map",
-    "static/js/2.676aa28a.chunk.js.LICENSE.txt": "/static/js/2.676aa28a.chunk.js.LICENSE.txt",
-    "static/media/main.css": "/static/media/OpenSans-ExtraBold.fb7e3a29.ttf",
-    "static/media/arrow_left.svg": "/static/media/arrow_left.bbd61143.svg",
-    "static/media/arrow_right.svg": "/static/media/arrow_right.e1b753df.svg",
-    "static/media/logo.svg": "/static/media/logo.b29d9768.svg"
+    "main.css": "/portfolio/static/css/main.62151a08.chunk.css",
+    "main.js": "/portfolio/static/js/main.e3425e3c.chunk.js",
+    "main.js.map": "/portfolio/static/js/main.e3425e3c.chunk.js.map",
+    "runtime-main.js": "/portfolio/static/js/runtime-main.fb1b3dac.js",
+    "runtime-main.js.map": "/portfolio/static/js/runtime-main.fb1b3dac.js.map",
+    "static/js/2.ab7ebf7e.chunk.js": "/portfolio/static/js/2.ab7ebf7e.chunk.js",
+    "static/js/2.ab7ebf7e.chunk.js.map": "/portfolio/static/js/2.ab7ebf7e.chunk.js.map",
+    "index.html": "/portfolio/index.html",
+    "precache-manifest.878e1f1a58a5dba7b4b45e82fbd2a715.js": "/portfolio/precache-manifest.878e1f1a58a5dba7b4b45e82fbd2a715.js",
+    "service-worker.js": "/portfolio/service-worker.js",
+    "static/css/main.62151a08.chunk.css.map": "/portfolio/static/css/main.62151a08.chunk.css.map",
+    "static/js/2.ab7ebf7e.chunk.js.LICENSE.txt": "/portfolio/static/js/2.ab7ebf7e.chunk.js.LICENSE.txt",
+    "static/media/main.css": "/portfolio/static/media/OpenSans-ExtraBold.fb7e3a29.ttf",
+    "static/media/arrow_left.svg": "/portfolio/static/media/arrow_left.bbd61143.svg",
+    "static/media/arrow_right.svg": "/portfolio/static/media/arrow_right.e1b753df.svg",
+    "static/media/logo.svg": "/portfolio/static/media/logo.b29d9768.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e5fc83a6.js",
-    "static/js/2.676aa28a.chunk.js",
-    "static/css/main.95caff72.chunk.css",
-    "static/js/main.625c41bd.chunk.js"
+    "static/js/runtime-main.fb1b3dac.js",
+    "static/js/2.ab7ebf7e.chunk.js",
+    "static/css/main.62151a08.chunk.css",
+    "static/js/main.e3425e3c.chunk.js"
   ]
 }
