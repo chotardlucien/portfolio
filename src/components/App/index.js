@@ -14,14 +14,14 @@ const Wrapper = styled.div`
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter  basename={process.env.PUBLIC_URL}>
       <Wrapper>
-        <Header></Header>
-        <Redirect exact from="/" to="projects" />
-        <Switch>
-        <Route path="/about" component={About}></Route>
-        <Route path="/projects" component={Projects}></Route>
-        </Switch>
+        <Header></Header>=
+          <Redirect exact from="/" to="projects" />
+          <Switch>
+            <Route path="/about" component={About}></Route>
+            <Route path="/" component={Projects}></Route>
+          </Switch>=
       </Wrapper>
     </BrowserRouter>
   );
