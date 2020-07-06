@@ -1,4 +1,4 @@
-import React, { Component, createRef} from 'react'
+import React, { Component } from 'react'
 import MobileSliderNav from './MobileSliderNav.js'
 import {Link} from 'react-router-dom'
 import data from '../../assets/data.js'
@@ -101,12 +101,14 @@ z-index:2;
 width: calc(100% * 3);
 transform: translateX(${props => 100/props.nbimg});
 position:relative;
+margin-bottom:20px;
 transition: all ${theme.sliderDelay}s;
 @media screen and (min-width: 960px){
     display:flex;
     flex-direction:column;
     width:min-content;
     top:254px;
+    margin-bottom:0px;
 }
 @media screen and (min-width: 1260px){
     top:441.500px;
@@ -120,6 +122,7 @@ width:${props => 100/props.nbimg}%;
 float:left;
 transition: all ${theme.sliderDelay}s;
 filter: blur(10px);
+opacity:0;
 img{
     clip-path: polygon(70% 0, 100% 0%, 35% 100%, 0% 100%);
     filter: grayscale(100%);
@@ -127,6 +130,7 @@ img{
     transition: all ${theme.sliderDelay}s;
 }
 &.active{
+    opacity:1;
     filter: blur(0px);
     img{
         filter: grayscale(0%);
@@ -137,10 +141,6 @@ img{
 }
 @media screen and (min-width: 960px){
     width:400px;
-    opacity:0;
-    &.active{
-        opacity:1;
-    }
 }
 @media screen and (min-width: 1260px){
     width:700px;
@@ -150,6 +150,7 @@ img{
 }
 `
 let SvgBox = styled.div`
+pointer-events:none;
 width:100vw;
 height:100vh;
 position:fixed;
@@ -162,20 +163,31 @@ align-items:center;
 `
 let SliderNav = styled.div`
 display:flex;
-flex-direction:column;
+flex-direction:row;
 justify:centent:center;
 align-items:center;
+align-self:center;
 font-family:AvenirBlack;
-margin-left:20px;
+margin-bottom:20px;
 span{
     padding:10px;
 }
 span:first-child{
     color:${theme.primaryColor};
-    border-bottom:solid #ffffff40 2px;
+    border-right:solid #ffffff40 2px;
 }
 span:last-child{
     color:${theme.titleColor};
+}
+@media screen and (min-width: 960px){
+    margin-left:20px;
+    margin-bottom:0px;
+    flex-direction:column;
+    align-self:auto;
+    span:first-child{
+        border-right:none;
+        border-bottom:solid #ffffff40 2px;
+    }
 }
 `
 
@@ -207,6 +219,7 @@ class Projects extends Component {
             year:data[0].year,
             title:data[0].title,
             desc:data[0].desc,
+            url:data[0].url,
             interpolators,
             index:0,
         }
@@ -214,6 +227,54 @@ class Projects extends Component {
     componentDidMount(){
         window.addEventListener('resize',this.seekSlide,true)
         window.addEventListener('wheel', this.handleScroll,true);
+        document.addEventListener('touchstart', handleTouchStart, false);        
+        document.addEventListener('touchmove', handleTouchMove.bind(this), false);
+        
+        var xDown = null;                                                        
+        var yDown = null;
+        
+        function getTouches(evt) {
+          return evt.touches ||             // browser API
+                 evt.originalEvent.touches; // jQuery
+        }                                                     
+        
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];                                      
+            xDown = firstTouch.clientX;                                      
+            yDown = firstTouch.clientY;                                      
+        };                                                
+        
+        function handleTouchMove(evt) {
+            if ( ! xDown || ! yDown ) {
+                return;
+            }
+        
+            var xUp = evt.touches[0].clientX;                                    
+            var yUp = evt.touches[0].clientY;
+        
+            var xDiff = xDown - xUp;
+            var yDiff = yDown - yUp;
+        
+            if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+                if ( xDiff > 0 ) {
+                    /* left swipe */ 
+                    this.seekSlide(this.state.curIndex+1)
+                } else {
+                    /* right swipe */
+                    console.log("RIGHT")
+                    this.seekSlide(this.state.curIndex-1)
+                }                       
+            } else {
+                if ( yDiff > 0 ) {
+                    /* up swipe */ 
+                } else { 
+                    /* down swipe */
+                }                                                                 
+            }
+            /* reset values */
+            xDown = null;
+            yDown = null;                                             
+        };
     }  
     componentWillUnmount(){
         console.log('unmount')
@@ -256,6 +317,7 @@ class Projects extends Component {
                 year:data[target].year,
                 title:data[target].title,
                 desc:data[target].desc,
+                url:data[target].url,
                 curIndex:target,
                 incrMobile:incr,
                 index: this.state.index + 1 >= this.state.interpolators.length ? 0 : this.state.index + 1
@@ -293,8 +355,8 @@ class Projects extends Component {
                         {data.map((item, index) => {
                             let curIndex = this.state.curIndex
                             return(
-                            <SlideImg className={index === curIndex? "active" : null} nbimg={this.state.nbImg} key={index} to="/project_details">
-                                <img src={"projects-images/"+data[index].img} alt="" />
+                            <SlideImg className={index === curIndex? "active" : null} nbimg={this.state.nbImg} key={index} to={"/projects/"+this.state.url}>
+                                <img src={"post-images/"+data[index].img} alt="" />
                             </SlideImg>
                             )
                         })}
@@ -308,7 +370,7 @@ class Projects extends Component {
                                 <h2 ref={this.titleDom}>{this.state.title}</h2>
                             </Headline>
                             <Desc ref={this.descDom}>{this.state.desc}</Desc>
-                            <StyledBtn to="/project_details">See project</StyledBtn>
+                            <StyledBtn to={"/projects/"+this.state.url}>See project</StyledBtn>
                         </Info>
                     </Slide>
                 </DesktopWrapper>
