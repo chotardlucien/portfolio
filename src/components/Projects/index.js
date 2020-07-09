@@ -9,6 +9,7 @@ import {Spring, animated} from 'react-spring/renderprops'
 import theme from '../../assets/theme.js'
 import delay from 'delay'
 
+let Scroll = true
 const DesktopWrapper = styled.div`
 @media screen and (min-width: 960px){
     z-index:0;
@@ -215,8 +216,7 @@ class Projects extends Component {
             desc:data[0].desc,
             url:data[0].url,
             prevPath:paths[0],
-            targetPath:paths[0],
-            index:0,
+            targetPath:paths[0]
         }
     }
     componentDidMount(){
@@ -275,13 +275,18 @@ class Projects extends Component {
         window.removeEventListener('wheel', this.handleScroll,true);
     }
     handleScroll=(event)=>{
-        if (event.deltaY*100 < 0)
-        {
-        this.seekSlide(this.state.curIndex-1)
-        }
-        else if (event.deltaY*100 > 0)
-        {
-        this.seekSlide(this.state.curIndex+1)
+        if(Scroll){
+            if (event.deltaY*100 < 0)
+            {
+            this.seekSlide(this.state.curIndex-1)
+            }
+            else if (event.deltaY*100 > 0)
+            {
+            this.seekSlide(this.state.curIndex+1)
+            }
+            console.log("fire")
+            Scroll=false
+            setTimeout(()=>{Scroll=true},1000)
         }
     }
     seekSlide = async (target) => {
@@ -302,7 +307,6 @@ class Projects extends Component {
                 this.sliderWrapper.current.style.transform="translateY(calc(100%/"+this.state.nbImg+"*-"+target+"))"
             }
             await delay(400)
-            console.log(target)
             this.setState({
                 tag:data[target].tag,
                 year:data[target].year,
@@ -313,10 +317,7 @@ class Projects extends Component {
                 incrMobile:incr,
                 prevPath:paths[this.state.curIndex],
                 targetPath:paths[target],
-                index: this.state.index + 1 >= paths.length ? 0 : this.state.index + 1
             })
-            console.log(this.state.prevPath)
-            console.log(this.state.targetPath)
             // this.setState({isMoving:"null"})
             this.descDom.current.classList.remove('ismoving')
             this.ctxDom.current.classList.remove('ismoving')
