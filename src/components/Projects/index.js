@@ -5,7 +5,7 @@ import data from '../../assets/data.js'
 import styled from 'styled-components';
 import {StyledBtn} from '../shared_components.js'
 import {Spring, animated} from 'react-spring/renderprops'
-import {interpolate} from 'flubber'
+// import {interpolate} from 'flubber'
 import theme from '../../assets/theme.js'
 import delay from 'delay'
 
@@ -196,12 +196,6 @@ const paths=[
     'M34.1,-38.8C41.4,-34.5,42.7,-21.1,49.7,-5.3C56.7,10.6,69.3,28.9,64.7,37.9C60.2,46.8,38.4,46.4,22.2,45.7C5.9,45,-4.9,44.1,-15.7,41C-26.4,38,-37.2,32.8,-41.7,24.4C-46.2,15.9,-44.6,4.2,-41.9,-6.7C-39.1,-17.5,-35.3,-27.5,-28.1,-31.8C-20.9,-36.2,-10.5,-35,1.5,-36.7C13.4,-38.5,26.8,-43.1,34.1,-38.8Z',
     'M43.3,-47C53.9,-42.7,58.9,-27,57.5,-13.3C56,0.3,48.2,11.8,40.9,22.9C33.7,33.9,26.9,44.5,16.9,49.5C6.9,54.5,-6.3,53.9,-19.6,50.5C-32.9,47.1,-46.4,40.8,-55,29.9C-63.6,18.9,-67.3,3.2,-64.9,-11.6C-62.4,-26.3,-53.9,-40.1,-42,-44.3C-30.2,-48.4,-15.1,-42.9,0.6,-43.7C16.3,-44.4,32.7,-51.4,43.3,-47Z'
 ]
-const interpolators = []
-for (let i = 0; i < paths.length; i++) {
-  interpolators.push(
-    interpolate(paths[i], paths[i + 1] || paths[0], { maxSegmentLength: 0.1 })
-  )
-}
 
 class Projects extends Component {
     constructor(props){
@@ -220,7 +214,8 @@ class Projects extends Component {
             title:data[0].title,
             desc:data[0].desc,
             url:data[0].url,
-            interpolators,
+            prevPath:paths[0],
+            targetPath:paths[0],
             index:0,
         }
     }
@@ -261,7 +256,6 @@ class Projects extends Component {
                     this.seekSlide(this.state.curIndex+1)
                 } else {
                     /* right swipe */
-                    console.log("RIGHT")
                     this.seekSlide(this.state.curIndex-1)
                 }                       
             } else {
@@ -277,7 +271,6 @@ class Projects extends Component {
         };
     }  
     componentWillUnmount(){
-        console.log('unmount')
         window.removeEventListener('resize',this.seekSlide,true)
         window.removeEventListener('wheel', this.handleScroll,true);
     }
@@ -292,8 +285,6 @@ class Projects extends Component {
         }
     }
     seekSlide = async (target) => {
-        console.log('seekslide')
-        console.log(target)
         // Handle incorrect target
         if(target > data.length-1 || target < 0){
             target = this.state.curIndex
@@ -311,7 +302,7 @@ class Projects extends Component {
                 this.sliderWrapper.current.style.transform="translateY(calc(100%/"+this.state.nbImg+"*-"+target+"))"
             }
             await delay(400)
-            console.log('ok')
+            console.log(target)
             this.setState({
                 tag:data[target].tag,
                 year:data[target].year,
@@ -320,8 +311,12 @@ class Projects extends Component {
                 url:data[target].url,
                 curIndex:target,
                 incrMobile:incr,
-                index: this.state.index + 1 >= this.state.interpolators.length ? 0 : this.state.index + 1
+                prevPath:paths[this.state.curIndex],
+                targetPath:paths[target],
+                index: this.state.index + 1 >= paths.length ? 0 : this.state.index + 1
             })
+            console.log(this.state.prevPath)
+            console.log(this.state.targetPath)
             // this.setState({isMoving:"null"})
             this.descDom.current.classList.remove('ismoving')
             this.ctxDom.current.classList.remove('ismoving')
@@ -329,7 +324,6 @@ class Projects extends Component {
         }
     }
     render() {
-        const interpolator = this.state.interpolators[this.state.index]
         return (
             <>
                 <SvgBox>
@@ -337,10 +331,10 @@ class Projects extends Component {
                 <Spring
                 reset
                 native
-                from={{ t: 0 }}
-                to={{ t: 1 }}
+                from={{ t: this.state.prevPath }}
+                to={{ t: this.state.targetPath}}
                 >
-                {({ t }) => <animated.path fill="black" d={t.interpolate(interpolator)} transform="translate(500 500) scale(4)"/>}
+                {({ t }) => <animated.path fill="black" d={t} transform="translate(500 500) scale(4)"/>}
                 </Spring>
                 </svg>
                 </SvgBox>

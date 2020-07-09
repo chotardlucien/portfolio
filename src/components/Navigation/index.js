@@ -22,7 +22,7 @@ function Navigation() {
         <Nav>
             <ul>
                 <li><StyledLink to="/projects">Projects</StyledLink></li>
-                <li><StyledLink to="/about">About me</StyledLink></li>
+                <li><StyledLink to="/about">About</StyledLink></li>
             </ul>
         </Nav> 
     )
