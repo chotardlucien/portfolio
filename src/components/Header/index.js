@@ -7,10 +7,10 @@ const HeaderWrapper = styled.div`
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:30px 0;
+padding:30px 4%;
 `
 const Logo = styled.img`
-width:150px;
+width:120px;
 `
 
 function Header() {

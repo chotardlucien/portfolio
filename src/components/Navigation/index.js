@@ -21,8 +21,8 @@ function Navigation() {
     return (
         <Nav>
             <ul>
-                <li><StyledLink to="/projects">Projects</StyledLink></li>
-                <li><StyledLink to="/about">About</StyledLink></li>
+                <li><StyledLink to="/" exact>Projects</StyledLink></li>
+                <li><StyledLink to="/about" exact>About</StyledLink></li>
             </ul>
         </Nav> 
     )

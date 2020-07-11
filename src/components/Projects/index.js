@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom'
 import data from '../../assets/data.js'
 import styled from 'styled-components';
 import {StyledBtn} from '../shared_components.js'
+import ScrollBar from '../Scrollbar'
 import {Spring, animated} from 'react-spring/renderprops'
-// import {interpolate} from 'flubber'
 import theme from '../../assets/theme.js'
 import delay from 'delay'
 
@@ -112,7 +112,7 @@ transition: all ${theme.sliderDelay}s;
     margin-bottom:0px;
 }
 @media screen and (min-width: 1260px){
-    top:441.500px;
+    top:441.5px;
 }
 @media screen and (min-width: 1850px){
     top:500px;
@@ -124,6 +124,7 @@ float:left;
 transition: all ${theme.sliderDelay}s;
 filter: blur(10px);
 opacity:0;
+pointer-events:none;
 img{
     clip-path: polygon(70% 0, 100% 0%, 35% 100%, 0% 100%);
     filter: grayscale(100%);
@@ -131,6 +132,7 @@ img{
     transition: all ${theme.sliderDelay}s;
 }
 &.active{
+    pointer-events:auto;;
     opacity:1;
     filter: blur(0px);
     img{
@@ -327,6 +329,9 @@ class Projects extends Component {
     render() {
         return (
             <>
+                <ScrollBar index={this.state.curIndex} nb={100/(this.state.nbImg-1)}>
+                    <div className="bar"></div>
+                </ScrollBar>
                 <SvgBox>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%"  viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
                 <Spring

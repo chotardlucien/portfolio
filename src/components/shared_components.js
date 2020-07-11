@@ -8,6 +8,23 @@ font-family: AvenirBlack;
 text-decoration:none;
 `
 
+export const StyledIconLink= styled.li`
+.link-icon{
+    width:20px;
+    color:${theme.textColor};
+    margin-right:10px;
+}
+a{
+    font-family:AvenirRoman;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    color:white;
+}
+
+`
+
 export const StyledBtn = styled(NavLink)`
 color: black;
 font-family: AvenirBlack;
