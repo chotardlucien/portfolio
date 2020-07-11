@@ -10,7 +10,7 @@ import delay from 'delay'
 
 let Scroll = true
 const DesktopWrapper = styled.div`
-padding:40px;
+padding:0 40px;
 @media screen and (min-width: 960px){
     padding:0;
     z-index:0;
