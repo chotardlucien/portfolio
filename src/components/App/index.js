@@ -3,9 +3,10 @@ import Header from '../Header'
 import About from '../About'
 import Projects from '../Projects'
 import ProjectDetails from '../ProjectDetails'
-import {BrowserRouter,Route,Redirect,Switch} from 'react-router-dom'
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import styled from 'styled-components';
 import '../../main.css';
+import{TransitionGroup,CSSTransition} from'react-transition-group'
 
 const Wrapper = styled.div`
   width:100%;
@@ -14,17 +15,32 @@ const Wrapper = styled.div`
 `
 
 function App() {
+  const [inProp, setInProp] = React.useState(false);
   return (
-    <BrowserRouter  basename={process.env.PUBLIC_URL}>
-      <Wrapper>
-        <Header></Header>
-          <Switch>
-            <Route exact path="/" component={Projects}></Route>
-            <Route path="/about" component={About}></Route>
-            <Route path="/projects/:url" component={ProjectDetails}></Route>
-          </Switch>
-      </Wrapper>
-    </BrowserRouter>
+    <Wrapper>
+      <BrowserRouter  basename={process.env.PUBLIC_URL}>
+          <Header></Header>
+          <Route render={(location) => {
+            location = location.location
+            const { pathname, key } = location
+            return(
+              <TransitionGroup component={null}>
+                <CSSTransition
+                key={key}
+                classNames="page"
+                timeout={600}
+                >
+                  <Switch location={location}>
+                    <Route exact path="/" component={Projects}></Route>
+                    <Route path="/about" component={About}></Route>
+                    <Route path="/projects/:url" component={ProjectDetails}></Route>
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
+            )
+          }}/>
+      </BrowserRouter>
+    </Wrapper>
   );
 }
 

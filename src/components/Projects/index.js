@@ -3,7 +3,7 @@ import MobileSliderNav from './MobileSliderNav.js'
 import {Link} from 'react-router-dom'
 import data from '../../assets/data.js'
 import styled from 'styled-components';
-import {StyledBtn} from '../shared_components.js'
+import {StyledBtn, PageWrapper} from '../shared_components.js'
 import ScrollBar from '../Scrollbar'
 import {Spring, animated} from 'react-spring/renderprops'
 import theme from '../../assets/theme.js'
@@ -328,7 +328,7 @@ class Projects extends Component {
     }
     render() {
         return (
-            <>
+            <PageWrapper>
                 <ScrollBar index={this.state.curIndex} nb={100/(this.state.nbImg-1)}>
                     <div className="bar"></div>
                 </ScrollBar>
@@ -374,7 +374,7 @@ class Projects extends Component {
                         </Info>
                     </Slide>
                 </DesktopWrapper>
-            </>
+            </PageWrapper>
         )
     }
 }

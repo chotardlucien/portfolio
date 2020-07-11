@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from "react-router"
 import styled from 'styled-components'
 import data from '../../assets/data.js'
-import {StyledBtn,StyledIconLink} from '../shared_components.js'
+import {StyledBtn,StyledIconLink,PageWrapper} from '../shared_components.js'
 import theme from '../../assets/theme.js'
 
 const Wrapper = styled.div`
@@ -96,8 +96,8 @@ function findPostBySlug(slug) {
 function ProjectDetails() {
     let  {url} = useParams()
     let post = findPostBySlug(url);
-    console.log(post)
     return (
+      <PageWrapper>
         <Wrapper>
           <StyledBtn to="/">Back</StyledBtn>
           <Landing>
@@ -135,6 +135,7 @@ function ProjectDetails() {
             })}
           </Project>
         </Wrapper>
+      </PageWrapper>
     )
 }
 

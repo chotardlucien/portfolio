@@ -35,4 +35,9 @@ padding:5px 15px;
 border-radius:20px;
 `
 
+export const PageWrapper = styled.div`
+opacity:1;
+transition:all 0.3s;
+`
+
 export default StyledLink
