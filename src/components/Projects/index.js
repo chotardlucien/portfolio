@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import MobileSliderNav from './MobileSliderNav.js'
 import {Link} from 'react-router-dom'
 import data from '../../assets/data.js'
 import styled from 'styled-components';
@@ -11,7 +10,9 @@ import delay from 'delay'
 
 let Scroll = true
 const DesktopWrapper = styled.div`
+padding:40px;
 @media screen and (min-width: 960px){
+    padding:0;
     z-index:0;
     width:100vw;
     height:100vh;
@@ -153,6 +154,10 @@ img{
 }
 `
 let SvgBox = styled.div`
+svg{
+    opacity:0;
+    transition:all 0.4s;
+}
 pointer-events:none;
 width:100vw;
 height:100vh;
@@ -163,6 +168,12 @@ z-index:0;
 display:flex;
 justify-content:center;
 align-items:center;
+@media screen and (min-width: 960px){
+    svg{   
+        opacity:1;
+        transition:all 0.4s;
+    }
+}
 `
 let SliderNav = styled.div`
 display:flex;
@@ -344,7 +355,6 @@ class Projects extends Component {
                 </Spring>
                 </svg>
                 </SvgBox>
-                <MobileSliderNav next={this.seekSlide} curIndex={this.state.curIndex} prev="disabled" ></MobileSliderNav>
                 <DesktopWrapper id="wrapper">
                     <Slide id="slide">
                         <SliderNav>

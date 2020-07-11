@@ -6,13 +6,19 @@ import {StyledBtn,StyledIconLink,PageWrapper} from '../shared_components.js'
 import theme from '../../assets/theme.js'
 
 const Wrapper = styled.div`
-  margin:0 auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:20px;
   color:white;
   display:flex;
   flex-direction:column;
   a{
     width:max-content;
     margin-bottom:20px;
+  }
+  
+  @media screen and (min-width: 960px){
+    margin-top:0;
   }
   @media screen and (min-width: 1260px){
     max-width:1220px;
@@ -22,9 +28,9 @@ const Landing = styled.div`
 margin-top:20px;
 display:flex;
 flex-direction:column;
-padding: 50px 4%;
+padding: 20px 40px;
 border-bottom: solid #ffffff47 2px;
-margin-bottom: 50px;
+margin-bottom: 20px;
 @media screen and (min-width: 960px){
   flex-direction:row;
   justify-content: space-between;
@@ -79,13 +85,20 @@ font-size: 16px;
 position: relative;
 color: ${theme.textColor};
 text-align:right;
-padding:20px 0;
+padding:40px 0;
+@media screen and (min-width: 960px){
+  padding:20px 0;
+}
+`
+const ProjectNav=styled.div`
+  padding:0 40px;
 `
 
 const Project = styled.div`
 img{
   width:100%;
-  padding:40px;
+  padding:20px 40px;
+  margin-bottom:20px;
 }
 `
 
@@ -99,7 +112,9 @@ function ProjectDetails() {
     return (
       <PageWrapper>
         <Wrapper>
-          <StyledBtn to="/">Back</StyledBtn>
+          <ProjectNav>
+            <StyledBtn to="/">Back</StyledBtn>
+          </ProjectNav>
           <Landing>
             <ProjectInfo>
               <Headline>
