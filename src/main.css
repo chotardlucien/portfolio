@@ -31,12 +31,12 @@ body{
 }
 .page-enter-active {
   opacity: 1;
-  transition: opacity 300ms;
+  transition: opacity 200ms;
 }
 .page-exit {
   opacity: 1;
 }
 .page-exit-active {
   opacity: 0;
-  transition: opacity 300ms;
+  transition: opacity 200ms;
 }

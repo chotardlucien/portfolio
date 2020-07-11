@@ -106,7 +106,7 @@ position:relative;
 margin-bottom:20px;
 transition: all ${theme.sliderDelay}s;
 @media screen and (min-width: 960px){
-    display:flex;
+    display:none;
     flex-direction:column;
     width:min-content;
     top:254px;
@@ -154,10 +154,6 @@ img{
 }
 `
 let SvgBox = styled.div`
-svg{
-    opacity:0;
-    transition:all 0.4s;
-}
 pointer-events:none;
 width:100vw;
 height:100vh;
@@ -168,6 +164,23 @@ z-index:0;
 display:flex;
 justify-content:center;
 align-items:center;
+svg{
+    opacity:0;
+    transition:all 0.4s;
+}
+.blobTransition{
+    opacity:0;
+    width:100%;
+    height:100%;
+    transition:all 0.6s;
+    &.blobmoving{
+        opacity:1;
+        transition:all 0.6;
+    }
+}
+image{
+    opacity:0.2;
+}
 @media screen and (min-width: 960px){
     svg{   
         opacity:1;
@@ -214,6 +227,7 @@ const paths=[
 class Projects extends Component {
     constructor(props){
         super(props)
+        this.blobDom=React.createRef()
         this.sliderWrapper=React.createRef()
         this.descDom=React.createRef()
         this.titleDom=React.createRef()
@@ -226,6 +240,7 @@ class Projects extends Component {
             tag:data[0].tag,
             year:data[0].year,
             title:data[0].title,
+            img:data[0].img,
             desc:data[0].desc,
             url:data[0].url,
             prevPath:paths[0],
@@ -309,6 +324,7 @@ class Projects extends Component {
         }
         else{
             this.descDom.current.classList.add('ismoving')
+            this.blobDom.current.classList.add('blobmoving')
             this.ctxDom.current.classList.add('ismoving')
             this.titleDom.current.classList.add('ismoving')
             target = typeof(target)!="number" ? this.state.curIndex : target
@@ -325,6 +341,7 @@ class Projects extends Component {
                 year:data[target].year,
                 title:data[target].title,
                 desc:data[target].desc,
+                img:data[target].img,
                 url:data[target].url,
                 curIndex:target,
                 incrMobile:incr,
@@ -334,6 +351,7 @@ class Projects extends Component {
             // this.setState({isMoving:"null"})
             this.descDom.current.classList.remove('ismoving')
             this.ctxDom.current.classList.remove('ismoving')
+            this.blobDom.current.classList.remove('blobmoving')
             this.titleDom.current.classList.remove('ismoving')
         }
     }
@@ -345,14 +363,19 @@ class Projects extends Component {
                 </ScrollBar>
                 <SvgBox>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%"  viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
-                <Spring
-                reset
-                native
-                from={{ t: this.state.prevPath }}
-                to={{ t: this.state.targetPath}}
-                >
-                {({ t }) => <animated.path fill="black" d={t} transform="translate(500 500) scale(4)"/>}
-                </Spring>
+                    <defs>
+                    <clipPath id="blob">
+                        <Spring
+                        reset
+                        native
+                        from={{ t: this.state.prevPath }}
+                        to={{ t: this.state.targetPath}}
+                        >
+                        {({ t }) => <animated.path fill="black" d={t} transform="translate(500 500) scale(4)"/>}
+                        </Spring>
+                    </clipPath></defs>
+                    <image width="1000" height="1000" clip-path="url(#blob)"  xlinkHref={"post-images/"+this.state.img} ></image>
+                    <rect fill="#0e0e0e" ref={this.blobDom} width="1000" height="1000" clip-path="url(#blob)" className="blobTransition"></rect>
                 </svg>
                 </SvgBox>
                 <DesktopWrapper id="wrapper">

@@ -5,7 +5,7 @@
       title:'Time Museum',
       desc:'In this school project, we had to create an interactive web museum about whatever we wanted, using Three.js (webGL).',
       fullDesc:'In this school project, we had to create an interactive web museum about whatever we wanted, using Three.js (webGL). We have chosen to create the time museum, retracing the evolution of time measurement techniques through the example of the sundial, the hourglass and the clock.',
-      img:'0.jpg',
+      img:'mot/cover.jpg',
       url:'time-museum',
       links:[
         ["Visit","https://chotardlucien.github.io/Time-Museum/","web.svg"],
@@ -24,7 +24,7 @@
       title:'Karma',
       desc:'We were asked to find a solution to an issue related to Human and planet. We decided to focus on polluted oceans and have created an interactive and immersive website.',
       fullDesc:'We were asked to find a solution to an issue related to Human and planet. We decided to focus on polluted oceans and have created an interactive and immersive website in which we would see simultaneously a cigarette and fish journeys and how they finally meet each other even though they should never have. This project should shock users and teach them that a simple gesture can change.',
-      img:'2.jpg',
+      img:'karma/cover.jpg',
       url:'karma',
       links:[
         ["Visit","https://lucienchotard.github.io/karma/","web.svg"],
@@ -43,7 +43,7 @@
       title:'Relooking Ms',
       desc:'In this project, we were asked by our customer to create a website showcasing all the services she purposes in her beauty institute.',
       fullDesc:'In this project, we were asked by our customer to create a website showcasing all the services she purposes in her beauty institute.',
-      img:'showroom/cover.png',
+      img:'showroom/cover.jpg',
       url:'showroom-relooking',
       links:[
         ["Visit","http://showroomrelooking.fr/","web.svg"]

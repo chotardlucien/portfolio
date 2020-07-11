@@ -37,7 +37,7 @@ border-radius:20px;
 
 export const PageWrapper = styled.div`
 opacity:1;
-transition:all 0.3s;
+transition:all 0.2s;
 `
 
 export default StyledLink

@@ -28,7 +28,7 @@ function App() {
                 <CSSTransition
                 key={key}
                 classNames="page"
-                timeout={600}
+                timeout={400}
                 >
                   <Switch location={location}>
                     <Route exact path="/" component={Projects}></Route>
