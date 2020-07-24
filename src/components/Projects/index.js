@@ -10,9 +10,7 @@ import delay from 'delay'
 
 let Scroll = true
 const DesktopWrapper = styled.div`
-padding:0 40px;
-@media screen and (min-width: 960px){
-    padding:0;
+    padding:5%;
     z-index:0;
     width:100vw;
     height:100vh;
@@ -22,102 +20,96 @@ padding:0 40px;
     position: fixed;
     top: 0;
     left: 0;
-}
 `
 const Slide = styled.div`
-display:flex;
-flex-direction:column;
-align-items:baseline;
-@media screen and (min-width: 960px){
+    display:flex;
     flex-direction:row-reverse;
     left:0;
     top:0;
     align-items:center;
-}
 `
 const Info = styled.div`
-z-index:1;
-align-self:stretch;
-display:flex;
-flex-direction:column;
-a{
-    align-self:flex-end;
-}
-@media screen and (min-width: 960px){
-    align-self:unset;
-    width:400px;
-    margin-right:50px;
-}
+    z-index:1;
+    align-self:stretch;
+    display:flex;
+    flex-direction:column;
+    a{
+        align-self:flex-end;
+    }
+    @media screen and (min-width: 960px){
+        align-self:unset;
+        width:400px;
+        margin-right:50px;
+    }
 `
 const Headline = styled.div`
-display:flex;
-justify-content:space-between;
-align-items:flex-end;
-#context{
-    color:${theme.primaryColor};
-    font-family: AvenirRoman;
-    min-width:fit-content;
-    span{
-        text-transform:uppercase;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    #context{
+        color:${theme.primaryColor};
+        font-family: AvenirRoman;
+        min-width:fit-content;
+        span{
+            text-transform:uppercase;
+        }
+        
+        clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+        transition: all 0.4s;
+        &.ismoving{
+            clip-path: polygon(0 1%, 0 0, 0 100%, 0% 100%);
+            transition: all 0.2s;
+        }
     }
-    
-    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
-    transition: all 0.4s;
-    &.ismoving{
-        clip-path: polygon(0 1%, 0 0, 0 100%, 0% 100%);
-        transition: all 0.2s;
+    h2{
+        color: ${theme.titleColor};
+        text-transform: uppercase;
+        font-family: AvenirBlack;
+        letter-spacing: .2rem;
+        text-align:right;
+        clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+        transition: all 0.4s;
+        &.ismoving{
+            clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+            transition: all 0.2s;
+        }
     }
-}
-h2{
-    color: ${theme.titleColor};
-    text-transform: uppercase;
-    font-family: AvenirBlack;
-    letter-spacing: .2rem;
-    text-align:right;
+`
+const Desc = styled.p`
+    padding: 30px 00px;
+    text-align: right;
+    font-family: AvenirBook;
+    font-size: 16px;
+    position: relative;
+    color: ${theme.textColor};
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
     transition: all 0.4s;
     &.ismoving{
         clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
         transition: all 0.2s;
     }
-}
-`
-const Desc = styled.p`
-padding: 30px 00px;
-height:115px;
-text-align: right;
-font-family: AvenirBook;
-font-size: 14px;
-position: relative;
-color: ${theme.textColor};
-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
-transition: all 0.4s;
-&.ismoving{
-    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-    transition: all 0.2s;
-}
 `
 
 let SlidesContainer = styled.div`
-z-index:2;
-width: calc(100% * 3);
-transform: translateX(${props => 100/props.nbimg});
-position:relative;
-margin-bottom:20px;
-transition: all ${theme.sliderDelay}s;
-@media screen and (min-width: 960px){
-    display:none;
-    flex-direction:column;
-    width:min-content;
-    top:254px;
-    margin-bottom:0px;
-}
-@media screen and (min-width: 1260px){
-    top:441.5px;
-}
-@media screen and (min-width: 1850px){
-    top:500px;
-}
+    display:none;   
+    z-index:2;
+    width: calc(100% * 3);
+    transform: translateX(${props => 100/props.nbimg});
+    position:relative;
+    margin-bottom:20px;
+    transition: all ${theme.sliderDelay}s;
+    @media screen and (min-width: 960px){
+        flex-direction:column;
+        width:min-content;
+        top:254px;
+        margin-bottom:0px;
+    }
+    @media screen and (min-width: 1260px){
+        top:441.5px;
+    }
+    @media screen and (min-width: 1850px){
+        top:500px;
+    }
 `
 let SlideImg = styled(Link)`
 width:${props => 100/props.nbimg}%;
@@ -154,68 +146,48 @@ img{
 }
 `
 let SvgBox = styled.div`
-pointer-events:none;
-width:100vw;
-height:100vh;
-position:fixed;
-left:0;
-top:0;
-z-index:0;
-display:flex;
-justify-content:center;
-align-items:center;
-svg{
-    opacity:0;
-    transition:all 0.4s;
-}
-.blobTransition{
-    opacity:0;
-    width:100%;
-    height:100%;
-    transition:all 0.6s;
-    &.blobmoving{
+    pointer-events:none;
+    width:100vw;
+    height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0.5;
+    svg{
         opacity:1;
-        transition:all 0.6;
-    }
-}
-image{
-    opacity:0.2;
-}
-@media screen and (min-width: 960px){
-    svg{   
-        opacity:1;
+        transform:scale(2);
         transition:all 0.4s;
     }
-}
+    @media screen and (min-width: 960px){
+        svg{
+            transform:scale(1);
+            transition:all 0.4s;
+        }
+    }
 `
 let SliderNav = styled.div`
-display:flex;
-flex-direction:row;
-justify:centent:center;
-align-items:center;
-align-self:center;
-font-family:AvenirBlack;
-margin-bottom:20px;
-span{
-    padding:10px;
-}
-span:first-child{
-    color:${theme.primaryColor};
-    border-right:solid #ffffff40 2px;
-}
-span:last-child{
-    color:${theme.titleColor};
-}
-@media screen and (min-width: 960px){
+    display:flex;
+    flex-direction:column;
+    justify:centent:center;
+    align-items:center;
+    align-self:auto;
+    font-family:AvenirBlack;
     margin-left:20px;
     margin-bottom:0px;
-    flex-direction:column;
-    align-self:auto;
+    span{
+        padding:10px;
+    }
     span:first-child{
-        border-right:none;
+        color:${theme.primaryColor};
         border-bottom:solid #ffffff40 2px;
     }
-}
+    span:last-child{
+        color:${theme.titleColor};
+    }
 `
 
 const paths=[
@@ -227,7 +199,6 @@ const paths=[
 class Projects extends Component {
     constructor(props){
         super(props)
-        this.blobDom=React.createRef()
         this.sliderWrapper=React.createRef()
         this.descDom=React.createRef()
         this.titleDom=React.createRef()
@@ -244,7 +215,9 @@ class Projects extends Component {
             desc:data[0].desc,
             url:data[0].url,
             prevPath:paths[0],
-            targetPath:paths[0]
+            targetPath:paths[0],
+            prevColor:data[0].color,
+            targetColor:data[0].color,
         }
     }
     componentDidMount(){
@@ -324,7 +297,6 @@ class Projects extends Component {
         }
         else{
             this.descDom.current.classList.add('ismoving')
-            this.blobDom.current.classList.add('blobmoving')
             this.ctxDom.current.classList.add('ismoving')
             this.titleDom.current.classList.add('ismoving')
             target = typeof(target)!="number" ? this.state.curIndex : target
@@ -347,11 +319,12 @@ class Projects extends Component {
                 incrMobile:incr,
                 prevPath:paths[this.state.curIndex],
                 targetPath:paths[target],
+                prevColor:data[this.state.curIndex].color,
+                targetColor:data[target].color
             })
             // this.setState({isMoving:"null"})
             this.descDom.current.classList.remove('ismoving')
             this.ctxDom.current.classList.remove('ismoving')
-            this.blobDom.current.classList.remove('blobmoving')
             this.titleDom.current.classList.remove('ismoving')
         }
     }
@@ -363,25 +336,26 @@ class Projects extends Component {
                 </ScrollBar>
                 <SvgBox>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%"  viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                    <clipPath id="blob">
-                        <Spring
-                        reset
-                        native
-                        from={{ t: this.state.prevPath }}
-                        to={{ t: this.state.targetPath}}
-                        >
-                        {({ t }) => <animated.path fill="black" d={t} transform="translate(500 500) scale(4)"/>}
-                        </Spring>
-                    </clipPath></defs>
-                    <image width="1000" height="1000" clip-path="url(#blob)"  xlinkHref={"post-images/"+this.state.img} ></image>
-                    <rect fill="#0e0e0e" ref={this.blobDom} width="1000" height="1000" clip-path="url(#blob)" className="blobTransition"></rect>
+                    <Spring
+                    reset
+                    native
+                    from={{
+                        t: this.state.prevPath,
+                        color:this.state.prevColor
+                    }}
+                    to={{
+                        t:this.state.targetPath,
+                        color:this.state.targetColor
+                    }}
+                    >
+                    {(props) => <animated.path fill={props.color} d={props.t} transform="translate(500 500) scale(4)"/>}
+                    </Spring>
                 </svg>
                 </SvgBox>
                 <DesktopWrapper id="wrapper">
                     <Slide id="slide">
                         <SliderNav>
-                            <span>0{this.state.curIndex+1}</span>
+                            <span>0{this.state.curIndex+1}</span> 
                             <span>0{data.length}</span>
                         </SliderNav>
                         <SlidesContainer ref={this.sliderWrapper} nbimg={this.state.nbImg} curindex={this.state.curIndex}>

@@ -37,6 +37,7 @@ border-radius:20px;
 
 export const PageWrapper = styled.div`
 opacity:1;
+height:100%;
 transition:all 0.2s;
 `
 
