@@ -23,10 +23,14 @@ const DesktopWrapper = styled.div`
 `
 const Slide = styled.div`
     display:flex;
-    flex-direction:row-reverse;
+    flex-direction:column;
     left:0;
     top:0;
-    align-items:center;
+    align-items:initial;
+    @media screen and (min-width: 960px){
+        flex-direction:row-reverse;
+        align-items:center;
+    }
 `
 const Info = styled.div`
     z-index:1;
@@ -91,7 +95,6 @@ const Desc = styled.p`
 `
 
 let SlidesContainer = styled.div`
-    display:none;   
     z-index:2;
     width: calc(100% * 3);
     transform: translateX(${props => 100/props.nbimg});
@@ -101,36 +104,35 @@ let SlidesContainer = styled.div`
     @media screen and (min-width: 960px){
         flex-direction:column;
         width:min-content;
-        top:254px;
+        top:225px;
         margin-bottom:0px;
     }
     @media screen and (min-width: 1260px){
-        top:441.5px;
+        top:393.75px;
     }
     @media screen and (min-width: 1850px){
-        top:500px;
+        top:450px;
     }
 `
 let SlideImg = styled(Link)`
 width:${props => 100/props.nbimg}%;
 float:left;
 transition: all ${theme.sliderDelay}s;
-filter: blur(10px);
-opacity:0;
+opacity:0.5;
 pointer-events:none;
 img{
-    clip-path: polygon(70% 0, 100% 0%, 35% 100%, 0% 100%);
+    border-radius:20px;
     filter: grayscale(100%);
     width:100%;
+    transform:scale(0.9);
     transition: all ${theme.sliderDelay}s;
 }
 &.active{
     pointer-events:auto;;
     opacity:1;
-    filter: blur(0px);
     img{
+        transform:scale(1);
         filter: grayscale(0%);
-        clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
         transition: all ${theme.sliderDelay}s;
     }
     transition: all ${theme.sliderDelay}s;
@@ -156,7 +158,7 @@ let SvgBox = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    opacity:0.5;
+    opacity:0.2;
     svg{
         opacity:1;
         transform:scale(2);

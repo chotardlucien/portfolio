@@ -20,7 +20,7 @@
         ["img","mot2.png"],
         ["img","mot3.png"],
       ],
-      color:"#70001a"
+      color:"#4772ff"
     },
     {
       tag:'dev',
@@ -43,7 +43,7 @@
         ["img","karma/1.png"],
         ["img","karma/2.png"],
       ],
-      color:"#001aff"
+      color:"#47cbff"
     },
     {
       tag:'dev',
@@ -64,7 +64,7 @@
         ["img","showroom/1.png"],
         ["img","showroom/2.png"],
       ],
-      color:"#a80092"
+      color:"#ff47c8"
     }
   ]
 

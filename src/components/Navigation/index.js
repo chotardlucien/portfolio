@@ -8,6 +8,9 @@ z-index:2;
 ul{
     display:flex;
     list-style:none;
+    a{
+        color:black;
+    }
     a.active{
         color:${theme.primaryColor};
     }
