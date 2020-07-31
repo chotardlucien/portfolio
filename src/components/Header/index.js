@@ -1,6 +1,6 @@
 import React from 'react'
 import Navigation from '../Navigation'
-import HeaderLogo from '../../assets/images/logolight.svg'
+import HeaderLogo from '../../assets/images/logo.svg'
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`

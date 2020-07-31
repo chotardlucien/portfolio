@@ -13,6 +13,9 @@
 @font-face {
   font-family: "AvenirRoman";
   src: url("assets/fonts/AvenirLTProRoman.otf"); }
+@font-face {
+  font-family: "Lato";
+  src: url("assets/fonts/Lato-Light.ttf"); }
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +24,7 @@
 body {
   display: block;
   height: 100%;
-  background: white;
+  background: #1C1C1C;
   overflow-x: hidden; }
 
 .page-enter {

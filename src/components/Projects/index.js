@@ -4,7 +4,7 @@ import data from '../../assets/data.js'
 import styled from 'styled-components';
 import {StyledBtn, PageWrapper} from '../shared_components.js'
 import ScrollBar from '../Scrollbar'
-import {Spring, animated} from 'react-spring/renderprops'
+import {Spring, animated, config,Trail} from 'react-spring/renderprops'
 import theme from '../../assets/theme.js'
 import delay from 'delay'
 
@@ -80,21 +80,24 @@ const Headline = styled.div`
     }
 `
 const Desc = styled.p`
-    padding: 30px 00px;
+    padding: 20px 00px;
     text-align: right;
-    font-family: AvenirBook;
+    font-family: Lato;
+    letter-spacing:1px;
     font-size: 16px;
     position: relative;
     color: ${theme.textColor};
-    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
-    transition: all 0.4s;
+    opacity:1;
+    height:120px;
+    transition: all 1s;
     &.ismoving{
-        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-        transition: all 0.2s;
+        opacity:0;
+        transition: all 0.8s;
     }
 `
 
 let SlidesContainer = styled.div`
+    display:none;
     z-index:2;
     width: calc(100% * 3);
     transform: translateX(${props => 100/props.nbimg});
@@ -118,21 +121,21 @@ let SlideImg = styled(Link)`
 width:${props => 100/props.nbimg}%;
 float:left;
 transition: all ${theme.sliderDelay}s;
-opacity:0.5;
+opacity:0;
 pointer-events:none;
+margin-bottom:${theme.slideMargin}px;
 img{
-    border-radius:20px;
+    clip-path: polygon(70% 0, 100% 0%, 35% 100%, 0% 100%);
     filter: grayscale(100%);
     width:100%;
-    transform:scale(0.9);
     transition: all ${theme.sliderDelay}s;
 }
 &.active{
     pointer-events:auto;;
     opacity:1;
     img{
-        transform:scale(1);
         filter: grayscale(0%);
+        clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
         transition: all ${theme.sliderDelay}s;
     }
     transition: all ${theme.sliderDelay}s;
@@ -158,7 +161,18 @@ let SvgBox = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    opacity:0.2;
+    opacity:0.5;
+    image{
+        clip-path:url(#clip);
+    }
+    .color-path{
+        opacity:0.8;
+        transition:opacity 0.2s;
+        &.pathmoving{
+            opacity:1;
+            transition:all 0.2s;
+        }
+    }
     svg{
         opacity:1;
         transform:scale(2);
@@ -173,22 +187,30 @@ let SvgBox = styled.div`
 `
 let SliderNav = styled.div`
     display:flex;
-    flex-direction:column;
-    justify:centent:center;
+    flex-direction:row;
+    justify-content:center;
     align-items:center;
     align-self:auto;
     font-family:AvenirBlack;
-    margin-left:20px;
-    margin-bottom:0px;
+    margin-bottom:20px;
     span{
         padding:10px;
     }
     span:first-child{
         color:${theme.primaryColor};
-        border-bottom:solid #ffffff40 2px;
+        border-right:solid #ffffff40 2px;
     }
     span:last-child{
         color:${theme.titleColor};
+    }
+    @media screen and (min-width: 960px){
+        margin-left:20px;
+        margin-bottom:0px;
+        flex-direction:column;
+        span:first-child{
+            border-bottom:solid #ffffff40 2px;
+            border-right:none;
+        }
     }
 `
 
@@ -205,6 +227,8 @@ class Projects extends Component {
         this.descDom=React.createRef()
         this.titleDom=React.createRef()
         this.ctxDom=React.createRef()
+        this.colorPath=React.createRef()
+        this.items=[1,2,3,4,5,6]
         this.state={
             isMoving:null,
             nbImg:data.length,
@@ -228,6 +252,10 @@ class Projects extends Component {
         document.addEventListener('touchstart', handleTouchStart, false);        
         document.addEventListener('touchmove', handleTouchMove.bind(this), false);
         
+        if(document.body.offsetWidth < 960){
+            this.sliderWrapper.current.style.marginTop=theme.slideMargin*this.state.nbImg+"px"
+        }
+
         var xDown = null;                                                        
         var yDown = null;
         
@@ -298,6 +326,8 @@ class Projects extends Component {
             target = this.state.curIndex
         }
         else{
+            this.isMoving=true;
+            this.colorPath.current.classList.add('pathmoving')
             this.descDom.current.classList.add('ismoving')
             this.ctxDom.current.classList.add('ismoving')
             this.titleDom.current.classList.add('ismoving')
@@ -305,9 +335,11 @@ class Projects extends Component {
             let incr = (100/this.state.nbImg)*(target)
             if(document.body.offsetWidth < 960){
                 this.sliderWrapper.current.style.transform="translateX(-"+incr+"%)"
+                this.sliderWrapper.current.style.marginTop="0px";
             }
             else {
                 this.sliderWrapper.current.style.transform="translateY(calc(100%/"+this.state.nbImg+"*-"+target+"))"
+                this.sliderWrapper.current.style.marginTop=theme.slideMargin*this.state.nbImg+"px"
             }
             await delay(400)
             this.setState({
@@ -324,10 +356,13 @@ class Projects extends Component {
                 prevColor:data[this.state.curIndex].color,
                 targetColor:data[target].color
             })
+            this.isMoving=false
             // this.setState({isMoving:"null"})
             this.descDom.current.classList.remove('ismoving')
             this.ctxDom.current.classList.remove('ismoving')
             this.titleDom.current.classList.remove('ismoving')
+            this.colorPath.current.classList.remove('pathmoving')
+            
         }
     }
     render() {
@@ -338,9 +373,11 @@ class Projects extends Component {
                 </ScrollBar>
                 <SvgBox>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%"  viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+                    <image height="100%" width="100%" xlinkHref={"../post-images/"+this.state.img} />
                     <Spring
                     reset
                     native
+                    config={{delay:300,tension: 280, friction: 120}}
                     from={{
                         t: this.state.prevPath,
                         color:this.state.prevColor
@@ -350,7 +387,32 @@ class Projects extends Component {
                         color:this.state.targetColor
                     }}
                     >
-                    {(props) => <animated.path fill={props.color} d={props.t} transform="translate(500 500) scale(4)"/>}
+                    {(props) => 
+                    <>
+                    <animated.path ref={this.colorPath} className="color-path"  fill={props.color} d={props.t} transform="translate(500 500) scale(4)"/>
+                    </>
+                    }
+                    </Spring>
+                    <Spring
+                    reset
+                    native
+                    config={config.molasses}
+                    from={{
+                        t: this.state.prevPath,
+                        color:this.state.prevColor
+                    }}
+                    to={{
+                        t:this.state.targetPath,
+                        color:this.state.targetColor
+                    }}
+                    >
+                    {(props) => 
+                    <>
+                    <clipPath id="clip">
+                        <animated.path  fill={props.color} d={props.t} transform="translate(500 500) scale(4)"/>
+                    </clipPath>
+                    </>
+                    }
                     </Spring>
                 </svg>
                 </SvgBox>
@@ -365,7 +427,7 @@ class Projects extends Component {
                             let curIndex = this.state.curIndex
                             return(
                             <SlideImg className={index === curIndex? "active" : null} nbimg={this.state.nbImg} key={index} to={"/projects/"+this.state.url}>
-                                <img src={"post-images/"+data[index].img} alt="" />
+                                <img src={"../post-images/"+data[index].img} alt="" />
                             </SlideImg>
                             )
                         })}

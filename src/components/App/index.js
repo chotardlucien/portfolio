@@ -3,7 +3,7 @@ import Header from '../Header'
 import About from '../About'
 import Projects from '../Projects'
 import ProjectDetails from '../ProjectDetails'
-import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom'
 import styled from 'styled-components';
 import '../../main.css';
 import{TransitionGroup,CSSTransition} from'react-transition-group'
@@ -31,7 +31,10 @@ function App() {
                 timeout={400}
                 >
                   <Switch location={location}>
-                    <Route exact path="/" component={Projects}></Route>
+                    <Route exact path="/">
+                      <Redirect to="/projects/"></Redirect>
+                    </Route>
+                    <Route exact path="/projects/" component={Projects}></Route>
                     <Route path="/about" component={About}></Route>
                     <Route path="/projects/:url" component={ProjectDetails}></Route>
                   </Switch>

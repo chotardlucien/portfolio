@@ -26,7 +26,7 @@ a{
 `
 
 export const StyledBtn = styled(NavLink)`
-color: black;
+color: white;
 font-family: AvenirBook;
 font-size:16px;
 text-decoration:none;

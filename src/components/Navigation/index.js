@@ -9,7 +9,7 @@ ul{
     display:flex;
     list-style:none;
     a{
-        color:black;
+        color:${theme.titleColor};
     }
     a.active{
         color:${theme.primaryColor};
@@ -24,7 +24,7 @@ function Navigation() {
     return (
         <Nav>
             <ul>
-                <li><StyledLink to="/" exact>Projects</StyledLink></li>
+                <li><StyledLink to="/projects/">Projects</StyledLink></li>
                 <li><StyledLink to="/about" exact>About</StyledLink></li>
             </ul>
         </Nav> 

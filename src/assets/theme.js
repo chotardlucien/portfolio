@@ -1,8 +1,9 @@
 const theme = {
-    primaryColor:'#FFCC00',
-    titleColor:'black',
-    textColor:'#363636',
-    sliderDelay:0.8
+    primaryColor:'#FF7A00',
+    titleColor:'white',
+    textColor:'white',
+    sliderDelay:0.8,
+    slideMargin:"20"
 }
 
 export default theme 
